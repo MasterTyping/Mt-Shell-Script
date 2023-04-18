@@ -1,0 +1,25 @@
+#!/bin/bash
+while getopts :f:p:u:a:s: opt; do
+        case $opt in
+            f) file_path=$OPTARG
+            ;;
+            p) pem_path=$OPTARG
+            ;;
+            u) user=$OPTARG
+            ;;
+            a) vm_address=$OPTARG
+            ;;
+            s) server_path=$OPTARG
+            ;;
+            \?) echo "Invalid option -$OPTARG" >&2
+            ;;
+        esac
+    done
+SendToServer()
+{
+    echo "Send To Server"
+    echo "file path : ${file_path} pem : ${pem_path} user : ${user} vm : ${vm_address} destination : ${server_path}"
+    date +"%Y-%m-%d %H:%M:%S"
+    sudo scp -i ${pem_path} ${file_path} ${user}@${vm_address}:${server_path} && echo "SendToServer: ${file_path} to ${vm_address} success when $(date +"%Y-%m-%d %H:%M:%S")" || echo "SendToServer: ${file_path} to ${vm_address} failed when $(date +"%Y-%m-%d %H:%M:%S")"
+}
+SendToServer

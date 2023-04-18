@@ -1,0 +1,13 @@
+#!/bin/bash
+
+function restart() {
+    echo "##########################################################"
+    echo "#########       restart docker         ###########"
+    echo "##########################################################"
+    sudo systemctl stop docker.socket
+    sudo systemctl stop docker
+    sudo rm -rf /var/run/docker
+    sudo rm /var/run/docker.*
+    sudo service docker start
+}
+restart

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+
+# The code defines a function called `installdocker` that installs Docker and Docker Compose on an Ubuntu system.
+# The function updates the package list, installs necessary dependencies, adds the Docker GPG key,
+# adds the Docker repository, installs Docker, downloads and installs Docker Compose, sets the correct permissions, and adds the current user to the Docker group.
+# Finally, the function is called to execute the installation process.
+function installdocker() {
+
+  echo "##########################################################"
+  echo "#########       Install docker         ###########"
+  echo "##########################################################"
+
+  sudo apt update -y
+  sudo apt install apt-transport-https ca-certificates curl software-properties-common
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"  
+  sudo apt update -y
+  apt-cache policy docker-ce
+  sudo apt install docker-ce -y
+  sudo curl -L https://github.com/docker/compose/releases/download/v2.1.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+  sudo chmod +x /usr/local/bin/docker-compose
+  sudo usermod -aG docker $USER
+}
+
+installdocker
