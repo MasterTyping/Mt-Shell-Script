@@ -1,0 +1,13 @@
+version: '3' # docker compose 버전 
+services:
+  mysql:
+    image: mysql       
+    command: --lower_case_table_names=2
+    ports:
+      - 3310:3306 
+    environment:      
+      MYSQL_ROOT_PASSWORD: INPUT_PASSWORD            
+      MYSQL_TCP_PORT: 3306
+    volumes:
+      - ./db/mysql/data:/var/lib/mysql
+      - ./db/mysql/init:/docker-entrypoint-initdb.d
